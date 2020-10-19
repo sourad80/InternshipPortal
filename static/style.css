@@ -1,0 +1,41 @@
+body, html {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+    /* The image used */
+  background-image: url("bg.jpg");
+
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+  
+@media only screen and (max-width: 600px) {
+    .lfthm {
+      display: none;
+    }
+  }
+
+.reg_form{
+    background-color: white;
+    opacity: .9;
+    padding: 10px 10px 10px 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.sub-entry {
+  /* padding : 10px;
+  width: 50%;
+  float: left; */
+}
+
+.log{
+    padding-top: 6em;
+}
+
