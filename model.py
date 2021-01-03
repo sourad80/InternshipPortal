@@ -16,11 +16,11 @@ class Student(db.Model,UserMixin):
     clx = db.Column(db.String(120))
     clxmarks = db.Column(db.Float)
     clxii = db.Column(db.String(120))
-    clxiimarks = db.Column(db.Float)
+    clxiimarks = db.Column(db.Float,default = 0.0)
     ug = db.Column(db.String(120))
-    ugmarks = db.Column(db.Float)
+    ugmarks = db.Column(db.Float,default = 0.0)
     pg = db.Column(db.String(120))
-    pgmarks = db.Column(db.Float)
+    pgmarks = db.Column(db.Float,default = 0.0)
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):

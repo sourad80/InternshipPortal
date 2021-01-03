@@ -1,8 +1,8 @@
 from app import app,db,bcrypt
-from flask import render_template,redirect,flash,url_for
+from flask import render_template,redirect,flash,url_for,request
 from forms import StuRegistration,StuLogin,StuUpdate
 from model import Student
-from flask_login import login_user
+from flask_login import login_user,current_user,login_required
 
 @app.route('/',methods=['POST','GET'])
 def home():
@@ -24,19 +24,47 @@ def login():
         if user and bcrypt.check_password_hash(user.password,form.password.data ):
             login_user(user,remember=form.remember.data)
             flash(f'Logged In', 'success')
+            if user.address == None or user.income == None or user.clx == None or user.clxmarks == None:
+                flash(f'Please Complete your Profile First!!!', 'warning')
+                return redirect(url_for('update'))
             return redirect(url_for('login'))
         flash(f'Login Unsuccessfull, Please Check Email and Password!!!', 'danger')
         return redirect(url_for('login'))
     return render_template("login.html", title="Login",form = form)
 
 @app.route('/update',methods=['POST','GET'])
+@login_required
 def update():
     form = StuUpdate()
     if form.validate_on_submit():
-        # hashed_password = bcrypt.generate_password_hash(form.password.data).decode('Utf-8')
-        # user = User(username = form.username.data, email = form.email.data, password = hashed_password )
-        # db.session.add(user)
-        # db.session.commit()
+        current_user.username = form.name.data
+        current_user.email = form.email.data
+        current_user.phone = form.phone.data
+        current_user.address = form.address.data
+        current_user.income = form.earning.data
+        current_user.clx = form.xinst.data
+        current_user.clxmarks = form.xmarks.data
+        current_user.clxii = form.xiiinst.data
+        current_user.clxiimarks = form.xiimarks.data
+        current_user.ug = form.uginst.data
+        current_user.ugmarks = form.ugmarks.data
+        current_user.pg = form.pginst.data
+        current_user.pgmarks = form.pgmarks.data
+        db.session.commit()
         flash(f'Account Updated Successfully!!', 'success')
-        return redirect(url_for('home'))
+        return "<H1>I've No fucking Idea what Ill do next!!!!!</H1>"
+    elif request.method == 'GET':
+        form.name.data = current_user.username
+        form.email.data = current_user.email 
+        form.phone.data = current_user.phone
+        form.address.data = current_user.address
+        form.earning.data = current_user.income
+        form.xinst.data = current_user.clx
+        form.xmarks.data = current_user.clxmarks
+        form.xiiinst.data = current_user.clxii 
+        form.xiimarks.data = current_user.clxiimarks
+        form.uginst.data = current_user.ug
+        form.ugmarks.data = current_user.ugmarks
+        form.pginst.data = current_user.pg
+        form.pgmarks.data = current_user.pgmarks
     return render_template("update.html", title="Update",form = form)

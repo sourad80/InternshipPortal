@@ -3,6 +3,7 @@ from flask_wtf.file import FileField,file_allowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from model import Student
+from flask_login import current_user
 
 class StuRegistration(Form):
     name = StringField('Name', validators = [ DataRequired() , Length(min = 2, max = 25) ])
@@ -55,17 +56,17 @@ class StuUpdate(Form):
     def validate_username(self,username):
         user = Student.query.filter_by(username = username.data).first()
 
-        if user:
+        if user and current_user.username != username.data:
             raise ValidationError('Username already exist!!')
     
     def validate_email(self,email):
         user = Student.query.filter_by(email = email.data).first()
 
-        if user:
-            raise ValidationError('Emali already exist!!')
+        if user and current_user.email != email.data:
+            raise ValidationError('Email already exist!!')
     
-    def validate_phone(self,phone):
+    '''def validate_phone(self,phone):
         user = Student.query.filter_by(phone = phone.data).first()
 
-        if user:
-            raise ValidationError('Phone already exist!!')
+        if user and current_user.phone != phone.data:
+            raise ValidationError('Phone number already exist!!')'''
