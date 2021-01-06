@@ -65,8 +65,8 @@ class StuUpdate(Form):
         if user and current_user.email != email.data:
             raise ValidationError('Email already exist!!')
     
-    '''def validate_phone(self,phone):
+    def validate_phone(self,phone):
         user = Student.query.filter_by(phone = phone.data).first()
-
-        if user and current_user.phone != phone.data:
-            raise ValidationError('Phone number already exist!!')'''
+        print(current_user.phone,phone.data,(current_user.phone != phone.data))
+        if user and current_user.phone != int(phone.data):
+            raise ValidationError('Phone number already exist!!')

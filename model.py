@@ -20,7 +20,7 @@ class Student(db.Model,UserMixin):
     ug = db.Column(db.String(120))
     ugmarks = db.Column(db.Float,default = 0.0)
     pg = db.Column(db.String(120))
-    pgmarks = db.Column(db.Float,default = 0.0)
+    pgmarks = db.Column(db.Float,default = 0.0,nullable=False)
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
