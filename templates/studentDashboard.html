@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-md-9">
+                {% for i in scholarshipList %}
+                <div class="card mt-3">
+                    <div class="card-header">
+                        {{i['org_name']}}
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">{{i['name']}}</h5>
+                      <p class="card-text">Scholarship Amount is {{i['amount']}}</p>
+                      <a href="{{ url_for('scheme', sch_name = i['name']) }}" class="btn btn-primary">Go to Apply Page</a>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+            <div class="col-md-3 jumbotron">
+                <h1>SIDE BAR</h1>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,3 +1,4 @@
+from flask_login.utils import logout_user
 from app import app,db,bcrypt
 from flask import render_template,redirect,flash,url_for,request
 from forms import StuRegistration,StuLogin,StuUpdate
@@ -6,6 +7,9 @@ from flask_login import login_user,current_user,login_required
 
 @app.route('/',methods=['POST','GET'])
 def home():
+    if current_user.is_authenticated:
+        flash(f'Already loged in', 'success')
+        return redirect(url_for('dashboard'))
     form = StuRegistration()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('Utf-8')
@@ -18,6 +22,9 @@ def home():
 
 @app.route('/login',methods=['POST','GET'])
 def login():
+    if current_user.is_authenticated:
+        flash(f'Already loged in', 'success')
+        return redirect(url_for('dashboard'))
     form = StuLogin()
     if form.validate_on_submit():
         user = Student.query.filter_by(email=form.email.data).first()
@@ -27,10 +34,26 @@ def login():
             if user.address == None or user.income == None or user.clx == None or user.clxmarks == None:
                 flash(f'Please Complete your Profile First!!!', 'warning')
                 return redirect(url_for('update'))
-            return redirect(url_for('login'))
+            return render_template("studentDashboard.html", title = "Welcome "+current_user.username)
         flash(f'Login Unsuccessfull, Please Check Email and Password!!!', 'danger')
         return redirect(url_for('login'))
     return render_template("login.html", title="Login",form = form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash(f'Successfully Loggeout User','info')
+    return redirect(url_for('home'))
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    scholarshipList = [ {'name':'XYZ Memorial Scholarship', 'org_name': 'XYZ', 'amount':5000},
+                        {'name':'ABC Memorial Scholarship', 'org_name': 'ABC', 'amount':5000},
+                        {'name':'MNO Memorial Scholarship', 'org_name': 'MNO', 'amount':5000},
+                        {'name':'OOP Memorial Scholarship', 'org_name': 'OOP', 'amount':5000} ]
+    return render_template("studentDashboard.html", title = "Welcome "+current_user.username, scholarshipList = scholarshipList)
 
 @app.route('/update',methods=['POST','GET'])
 @login_required
@@ -52,7 +75,7 @@ def update():
         current_user.pgmarks = form.pgmarks.data
         db.session.commit()
         flash(f'Account Updated Successfully!!', 'success')
-        return "<H1>I've No fucking Idea what Ill do next!!!!!</H1>"
+        return redirect(url_for('dashboard'))
     elif request.method == 'GET':
         form.name.data = current_user.username
         form.email.data = current_user.email 
@@ -68,3 +91,7 @@ def update():
         form.pginst.data = current_user.pg
         form.pgmarks.data = current_user.pgmarks
     return render_template("update.html", title="Update",form = form)
+
+@app.route("/scheme/<string:sch_name>")
+def scheme(sch_name):
+    return render_template("schemes.html", title = sch_name)
