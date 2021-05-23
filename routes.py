@@ -5,6 +5,10 @@ from forms import StuRegistration,StuLogin,StuUpdate
 from model import Student
 from flask_login import login_user,current_user,login_required
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/',methods=['POST','GET'])
 def home():
     if current_user.is_authenticated:
@@ -95,3 +99,8 @@ def update():
 @app.route("/scheme/<string:sch_name>")
 def scheme(sch_name):
     return render_template("schemes.html", title = sch_name)
+
+@app.route("/apply/<string:sch_name>")
+def apply(sch_name):
+    flash(f'Applied Successfully to '+sch_name,'success')
+    return redirect(url_for('dashboard'))

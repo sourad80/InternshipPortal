@@ -24,8 +24,12 @@
             <div class="col-md-4">
                 <div class="apply-box">
                     <h4>{{title}}</h4>
-                    <p>Org Name</p>
-                    <button class="btn btn-primary" style="width: 100%;">Apply</button>
+                    <p class="muted">Org Name</p>
+                    <a style="text-decoration: none; color: white;" href="{{ url_for('apply',sch_name=title) }}">
+                        <button class="btn btn-primary" style="width: 100%;">
+                            Apply
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
