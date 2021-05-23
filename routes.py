@@ -34,7 +34,7 @@ def login():
             if user.address == None or user.income == None or user.clx == None or user.clxmarks == None:
                 flash(f'Please Complete your Profile First!!!', 'warning')
                 return redirect(url_for('update'))
-            return render_template("studentDashboard.html", title = "Welcome "+current_user.username)
+            return redirect(url_for('dashboard'))
         flash(f'Login Unsuccessfull, Please Check Email and Password!!!', 'danger')
         return redirect(url_for('login'))
     return render_template("login.html", title="Login",form = form)

@@ -22,10 +22,35 @@ body, html {
   padding-top: 8vh;
   padding-left: 3vh;
 }
+
+.description{
+  background-color: rgba(255, 255, 255, 0.856);
+  border: 2px solid black;
+  box-shadow: 5px 5px 2px 1px rgba(37, 37, 37, 0.493);
+  color: black;
+  font-size: medium;
+  margin: 1vh;
+  padding: 2vh;
+  border-radius: 1vh;
+  height: 43.5vh;
+}
+
+.apply-box{
+  margin: 1vh;
+  padding: 2vh;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 1vh;
+  box-shadow: 5px 5px 2px 1px rgba(37, 37, 37, 0.493);
+
+}
   
 @media only screen and (max-width: 600px) {
     .lfthm {
       display: none;
+    }
+    .description{
+      height: max-content;
     }
   }
 
@@ -40,15 +65,19 @@ body, html {
     border-radius: 10px;
 }
 
-.description{
-  background-color: rgba(128, 128, 128, 0.479);
-  box-shadow: 5px 12px 2px 1px rgba(0, 0, 255, .2);
-  color: black;
-}
-.sub-entry {
-  /* padding : 10px;
-  width: 50%;
-  float: left; */
+.footer{
+  background-color: rgba(0, 0, 0, 0.98);
+  color: white;
+  height: 10vh;
+  padding-top: 4vh;
+  font-weight: bold;
+  font-size: large;
+  text-align: center;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  margin-top: 12vh;
 }
 
 .log{
