@@ -2,7 +2,7 @@ from flask_login.utils import logout_user
 from app import app,db,bcrypt
 from flask import render_template,redirect,flash,url_for,request
 from forms import StuRegistration,StuLogin,StuUpdate
-from model import Student
+from model import Student,Organization,Scholarship,scholarship_application
 from flask_login import login_user,current_user,login_required
 
 @app.route('/about')
@@ -53,11 +53,11 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    scholarshipList = [ {'name':'XYZ Memorial Scholarship', 'org_name': 'XYZ', 'amount':5000},
-                        {'name':'ABC Memorial Scholarship', 'org_name': 'ABC', 'amount':5000},
-                        {'name':'MNO Memorial Scholarship', 'org_name': 'MNO', 'amount':5000},
-                        {'name':'OOP Memorial Scholarship', 'org_name': 'OOP', 'amount':5000} ]
-    return render_template("studentDashboard.html", title = "Welcome "+current_user.username, scholarshipList = scholarshipList)
+    scholarship_list = []
+    for i in Scholarship.query.all():
+        if(i.cls_x_min_per <= current_user.clxmarks and i.cls_xii_min_per <= current_user.clxiimarks and i.cls_ug_min_per <= current_user.ugmarks):
+            scholarship_list.append(i)
+    return render_template("studentDashboard.html", title = "Welcome "+current_user.username, scholarshipList = scholarship_list)
 
 @app.route('/update',methods=['POST','GET'])
 @login_required
@@ -96,11 +96,21 @@ def update():
         form.pgmarks.data = current_user.pgmarks
     return render_template("update.html", title="Update",form = form)
 
-@app.route("/scheme/<string:sch_name>")
-def scheme(sch_name):
-    return render_template("schemes.html", title = sch_name)
+@app.route("/scheme/<int:sch_id>")
+def scheme(sch_id):
+    scholarship = Scholarship.query.filter_by(id = sch_id).first()
+    return render_template("schemes.html", title = scholarship.name, scholarship = scholarship)
 
-@app.route("/apply/<string:sch_name>")
-def apply(sch_name):
-    flash(f'Applied Successfully to '+sch_name,'success')
+@app.route("/apply/<int:sch_id>")
+def apply(sch_id):
+    scholarship = Scholarship.query.filter_by(id = sch_id).first()
+    already_applied = scholarship_application.query.filter_by(stu_id = current_user.id,sch_id = sch_id).first()
+    print(already_applied)
+    if already_applied:
+        flash(f'Already applied to '+scholarship.name,'warning')
+        return redirect(url_for('dashboard'))
+    application = scholarship_application(sch_id=scholarship.id,stu_id=current_user.id,org_id=scholarship.organization.id,status=1)
+    db.session.add(application)
+    db.session.commit()
+    flash(f'Applied Successfully to '+scholarship.name,'success')
     return redirect(url_for('dashboard'))

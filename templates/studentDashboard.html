@@ -7,12 +7,12 @@
                 {% for i in scholarshipList %}
                 <div class="card mt-2 mb-3">
                     <div class="card-header">
-                        {{i['org_name']}}
+                        {{i.organization.username}}
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">{{i['name']}}</h5>
-                      <p class="card-text">Scholarship Amount is {{i['amount']}}</p>
-                      <a href="{{ url_for('scheme', sch_name = i['name']) }}" class="btn btn-primary">Go to Apply Page</a>
+                      <h5 class="card-title">{{i.name}}</h5>
+                      <p class="card-text">Scholarship Amount is {{i.amount}}</p>
+                      <a href="{{ url_for('scheme', sch_id = i.id) }}" class="btn btn-primary">Go to Apply Page</a>
                     </div>
                   </div>
                   {% endfor %}

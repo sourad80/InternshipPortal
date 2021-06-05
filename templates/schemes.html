@@ -4,7 +4,7 @@
 
     <div class="container mt-3">
         <div class="header">
-            <h2>{{title}}</h2>
+            <h2>{{scholarship.name}}</h2>
         </div>
         <div class="row">
             <div class="col-md-8">
@@ -13,19 +13,19 @@
                         <h3>Scholarship Details:</h3><br>
                     </p>
                     <ul>
-                        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, nulla!</li>
-                        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, nulla!</li>
-                        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, nulla!</li>
-                        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, nulla!</li>
-                        <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, nulla!</li>
+                        <li>Amount: Rs. {{scholarship.amount}}</li>
+                        <li>{{scholarship.description}}</li>
+                        <li>Class X Min Marks: {{scholarship.description}}</li>
+                        <li>{{scholarship.description}}</li>
+                        <li>{{scholarship.description}}</li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="apply-box">
-                    <h4>{{title}}</h4>
-                    <p class="muted">Org Name</p>
-                    <a style="text-decoration: none; color: white;" href="{{ url_for('apply',sch_name=title) }}">
+                    <h4>{{scholarship.name}}</h4>
+                    <p class="muted">{{scholarship.organization.username}}</p>
+                    <a style="text-decoration: none; color: white;" href="{{ url_for('apply',sch_id=scholarship.id) }}">
                         <button class="btn btn-primary" style="width: 100%;">
                             Apply
                         </button>
