@@ -27,8 +27,7 @@ class StuRegistration(Form):
     
     def validate_phone(self,phone):
         user = Student.query.filter_by(phone = phone.data).first()
-        print(user.email, current_user.email)
-        if user and current_user.email!=user.email:
+        if user:
             raise ValidationError('Phone already exist!!')
 
 class StuLogin(Form):
