@@ -47,7 +47,9 @@ class Scholarship(db.Model):
     cls_xii_min_per = db.Column(db.Float)
     cls_ug_min_per = db.Column(db.Float)
     organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
-    applications = db.relationship('scholarship_application', backref='scholarsip', lazy=True)
+    life = db.Column(db.Integer, default=1)
+    datetime = db.Column(db.DateTime, default=datetime.utcnow())
+    applications = db.relationship('scholarship_application', backref='scholarship', lazy=True)
 
     def __repr__(self):
         return f"Scholarship('{self.name}', '{self.organization_id}','{self.description}','{self.cls_x_min_per}','{self.cls_xii_min_per}','{self.cls_ug_min_per}')"
@@ -57,4 +59,5 @@ class scholarship_application(db.Model):
     sch_id = db.Column(db.Integer, db.ForeignKey('scholarship.id'), nullable=False)
     stu_id = db.Column(db.Integer, db.ForeignKey('student.id'),nullable=False)
     org_id = db.Column(db.Integer, db.ForeignKey('organization.id'), nullable=False)
+    datetime = db.Column(db.DateTime, default=datetime.utcnow())
     status = db.Column(db.Integer,nullable=False)

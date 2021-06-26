@@ -126,3 +126,10 @@ def apply(sch_id):
     db.session.commit()
     flash(f'Applied Successfully to '+scholarship.name, 'success')
     return redirect(url_for('dashboard'))
+
+@app.route("/trackApplications/<int:stu_id>")
+def track_applications(stu_id):
+    scholarship_applications = scholarship_application.query.filter_by(stu_id = stu_id)
+    return render_template("applications.html", scholarship_applications = scholarship_applications)
+
+

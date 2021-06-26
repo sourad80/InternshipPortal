@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{%block content%}
+<div class="container bg-light rounded mt-5 p-3">
+    <h1 class="text-center">Applied Scholarships</h1>
+    {% for application in scholarship_applications%}
+    <div class="card mx-3 mt-4">
+        <div class="card-header">
+            {{ application.scholarship.name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Applied on
+                {{application.datetime.strftime("%A")}},{{application.datetime.strftime("%d")}}
+                {{application.datetime.strftime("%B")}},{{application.datetime.strftime("%Y")}}</h5>
+            <p class="card-text">The scholarship is provided by {{application.scholarship.organization.username}} for
+                queries you
+                can mail them at {{application.scholarship.organization.email}}.</p>
+
+            {% if application.status == 1%}
+            <h4 class="my-3">Application Status <i class="fa fa-clock-o text-warning" aria-hidden="true"></i></h4>
+            {% endif %}
+            {% if application.status == 0%}
+            <h4 class="my-3">Application Status <i class="fa fa-times text-danger" aria-hidden="true"></i></h4>
+            {% endif %}
+            {% if application.status == 2%}
+            <h4 class="my-3">Application Status <i class="fa fa-check text-success" aria-hidden="true"></i></h4>
+            {% endif %}
+
+            <div class="progress">
+                {% if application.status == 1%}
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;background-color: #ffea6d;"></div>
+                {% endif %}
+                {% if application.status == 0%}
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;background-color: #ff4949;"></div>
+                {% endif %}
+                {% if application.status == 2%}
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;background-color: #6be372;"></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
