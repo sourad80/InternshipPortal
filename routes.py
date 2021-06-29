@@ -63,9 +63,24 @@ def logout():
 def dashboard():
     scholarship_list = []
     for i in Scholarship.query.all():
-        if(i.cls_x_min_per <= current_user.clxmarks and i.cls_xii_min_per <= current_user.clxiimarks and i.cls_ug_min_per <= current_user.ugmarks):
+        if(i.cls_x_min_per <= current_user.clxmarks and i.cls_xii_min_per <= current_user.clxiimarks and i.cls_ug_min_per <= current_user.ugmarks and i.life == 1):
             scholarship_list.append(i)
     return render_template("studentDashboard.html", title="Welcome "+current_user.username, scholarshipList=scholarship_list)
+
+@app.route('/search', methods =["GET", "POST"])
+@login_required
+def search():
+    scholarship_list = []
+    for i in Scholarship.query.all():
+        if(i.cls_x_min_per <= current_user.clxmarks and i.cls_xii_min_per <= current_user.clxiimarks and i.cls_ug_min_per <= current_user.ugmarks and i.life == 1):
+            scholarship_list.append(i)
+    if request.method == "POST":
+       tag = request.form.get("searchField")
+    filtered_list = []
+    for i in scholarship_list:
+        if i.name.find(tag) != -1 or i.organization.username.find(tag) != -1 or i.description.find(tag) != -1 or str(i.amount).find(tag) != -1:
+            filtered_list.append(i)
+    return render_template("studentDashboard.html", title="Welcome "+current_user.username, scholarshipList=filtered_list)
 
 
 @app.route('/update', methods=['POST', 'GET'])

@@ -13,11 +13,15 @@
                         <h3>Scholarship Details:</h3><br>
                     </p>
                     <ul>
+                        <li>{{scholarship.description}}</li>
                         <li>Amount: Rs. {{scholarship.amount}}</li>
-                        <li>{{scholarship.description}}</li>
-                        <li>Class X Min Marks: {{scholarship.description}}</li>
-                        <li>{{scholarship.description}}</li>
-                        <li>{{scholarship.description}}</li>
+                        <li>Class X Min Marks: {{scholarship.cls_x_min_per}}</li>
+                        {% if scholarship.cls_xii_min_per > 0%}
+                            <li>Class XII Min Marks: {{scholarship.cls_xii_min_per}}</li>
+                        {% endif %}
+                        {% if scholarship.cls_ug_min_per > 0%}
+                            <li>Class UG Min Marks: {{scholarship.cls_ug_min_per}}</li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

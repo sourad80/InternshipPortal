@@ -17,8 +17,13 @@
                   </div>
                   {% endfor %}
                 </div>
-            <div class="col-md-3 jumbotron">
-                <h1>SIDE BAR</h1>
+            <div class="col-md-3 filters">
+                <h5><i class="fa fa-search" aria-hidden="true"></i> Search</h5>
+                <form class="form-group" action="{{url_for('search')}}" method="post">
+                    <label for="searchField">Tag:</label>
+                    <input class="form-control" type="text" id="searchField" name="searchField" placeholder="Search Tags">
+                    <button type="submit" class="btn btn-primary mt-3" value="Submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                </form>
             </div>
             </div>
         </div>

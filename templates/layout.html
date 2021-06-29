@@ -42,9 +42,6 @@
           <li class="nav-item {% if title == "About" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('about') }}">About</a>
           </li>
-          <li class="nav-item {% if title == "Services" %} active {% endif %}">
-            <a class="nav-link" href="#">Services</a>
-          </li>
           {% if not current_user.is_authenticated %}
           <li class="nav-item {% if title == "Login" %} active {% endif %}">
             <a class="nav-link" href="{{ url_for('login') }}">Login</a>
@@ -55,10 +52,12 @@
               <i class="fa fa-user" aria-hidden="true"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <h4>Hi {{current_user.username}}</h4>
-              <a href="{{ url_for('update') }}" class="dropdown-item">Update Account</a>
-              <a href="{{ url_for('track_applications',stu_id = current_user.id) }}" class="dropdown-item">Track Applications</a>
-              <a href="{{ url_for('logout') }}" class="dropdown-item">Logout</a>
+              <p>Hi {{current_user.username}}</p>
+                <hr>
+                <a href="{{ url_for('update') }}" class="dropdown-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update Account</a>
+                <a href="{{ url_for('track_applications',stu_id = current_user.id) }}" class="dropdown-item"><i class="fa fa-list-alt" aria-hidden="true"></i> Track Applications</a>
+                <a class="btn btn-outline-dark mx-2" style="width: 90%;" href="{{url_for('logout')}}" class="dropdown-item"><i
+                    class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
             </div>
           </div>
           {% endif %}
